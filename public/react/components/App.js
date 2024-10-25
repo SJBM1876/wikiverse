@@ -60,7 +60,7 @@ export const App = () => {
             <button onClick={() => setIsAddingArticle(true)}>Add a New Article</button>
             <Routes>
               <Route path="/" element={<PagesList pages={pages} />} />
-              <Route path="/article/:slug" element={<ArticleDetails />} />
+              <Route path="/article/:slug" element={<ArticleDetails fetchPages={fetchPages} />} />
             </Routes>
           </>
         )}
@@ -68,6 +68,7 @@ export const App = () => {
     </Router>
   );
 };
+
 
 
 
