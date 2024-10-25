@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 export const AddArticleForm = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [author, setAuthor] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [tags, setTags] = useState('');
 
   const handleSubmit = (e) => {
@@ -11,46 +12,62 @@ export const AddArticleForm = ({ onSubmit }) => {
     const articleData = {
       title,
       content,
-      author,
-      tags: tags.split(',').map(tag => tag.trim()), // Split tags into an array
+      name,
+      email,
+      tags,
     };
-    onSubmit(articleData);
-    // Reset form fields after submission
-    setTitle('');
-    setContent('');
-    setAuthor('');
-    setTags('');
+    onSubmit(articleData); // Call the onSubmit function from App.js
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        placeholder="Title" 
-        value={title} 
-        onChange={(e) => setTitle(e.target.value)} 
-        required 
-      />
-      <textarea 
-        placeholder="Content" 
-        value={content} 
-        onChange={(e) => setContent(e.target.value)} 
-        required 
-      />
-      <input 
-        type="text" 
-        placeholder="Author" 
-        value={author} 
-        onChange={(e) => setAuthor(e.target.value)} 
-        required 
-      />
-      <input 
-        type="text" 
-        placeholder="Tags (comma separated)" 
-        value={tags} 
-        onChange={(e) => setTags(e.target.value)} 
-      />
+      <div>
+        <label>Title:</label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Content:</label>
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Author Name:</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Author Email:</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Tags:</label>
+        <input
+          type="text"
+          value={tags}
+          onChange={(e) => setTags(e.target.value)}
+          placeholder="Separate tags with spaces"
+        />
+      </div>
       <button type="submit">Add Article</button>
+      <button type="button" onClick={() => onSubmit(null)}>Cancel</button>
     </form>
   );
 };
+
