@@ -7,9 +7,8 @@ import apiURL from '../api';
 
 export const App = () => {
   const [pages, setPages] = useState([]);
-  const [isAddingArticle, setIsAddingArticle] = useState(false); // Track if the form should be displayed
+  const [isAddingArticle, setIsAddingArticle] = useState(false);
 
-  // Function to fetch the list of pages
   const fetchPages = async () => {
     try {
       const response = await fetch(`${apiURL}/wiki`);
@@ -20,26 +19,23 @@ export const App = () => {
     }
   };
 
-  // Fetch pages on component mount
   useEffect(() => {
     fetchPages();
   }, []);
 
-  // Function to handle successful addition of a new article
   const handleAddArticle = async (articleData) => {
     try {
       const response = await fetch(`${apiURL}/wiki`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(articleData)
+        body: JSON.stringify(articleData),
       });
 
       if (response.ok) {
-        // Re-fetch pages after adding a new article
         await fetchPages();
-        setIsAddingArticle(false); // Return to the list view
+        setIsAddingArticle(false); // Return to the list view after adding
       } else {
         console.error('Failed to add the article');
       }
@@ -48,18 +44,20 @@ export const App = () => {
     }
   };
 
+  const handleCancel = () => {
+    setIsAddingArticle(false); // Return to the list view when canceled
+  };
+
   return (
     <Router>
       <main>
         <h1>WikiVerse</h1>
         <h2>An interesting 📚</h2>
         {isAddingArticle ? (
-          <AddArticleForm onSubmit={handleAddArticle} />
+          <AddArticleForm onSubmit={handleAddArticle} onCancel={handleCancel} />
         ) : (
           <>
-            <button onClick={() => setIsAddingArticle(true)}>
-              Add a New Article
-            </button>
+            <button onClick={() => setIsAddingArticle(true)}>Add a New Article</button>
             <Routes>
               <Route path="/" element={<PagesList pages={pages} />} />
               <Route path="/article/:slug" element={<ArticleDetails />} />

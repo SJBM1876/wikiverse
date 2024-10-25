@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const AddArticleForm = ({ onSubmit }) => {
+export const AddArticleForm = ({ onSubmit, onCancel }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [name, setName] = useState('');
@@ -16,7 +16,7 @@ export const AddArticleForm = ({ onSubmit }) => {
       email,
       tags,
     };
-    onSubmit(articleData); // Call the onSubmit function from App.js
+    onSubmit(articleData);
   };
 
   return (
@@ -66,8 +66,9 @@ export const AddArticleForm = ({ onSubmit }) => {
         />
       </div>
       <button type="submit">Add Article</button>
-      <button type="button" onClick={() => onSubmit(null)}>Cancel</button>
+      <button type="button" onClick={onCancel}>Cancel</button>
     </form>
   );
 };
+
 
